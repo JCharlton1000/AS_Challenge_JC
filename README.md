@@ -36,6 +36,13 @@ Please use Python 3.6
 
     $ patch -u env/lib/python3.6/site-packages/coapthon/serializer.py -i serialzer.patch 
 
+## Usage
+
+First run *coapserver.py*. If you pass no arguments to specify an IP and PORT then it will assume localhost (127.0.0.1) on PORT 5683. You should see the following output on the command line: 
+
+CoAP Server start on 127.0.0.1:5683
+['/', '/deleteuser', '/users']
+
 
 
 ## known issues
