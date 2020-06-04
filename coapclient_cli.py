@@ -142,16 +142,10 @@ def main():  # pragma: no cover
             print("Path cannot be empty for a POST request")
             usage()
             sys.exit(2)
-        #if payload is None:
-            #print("Payload cannot be empty for a POST request")
-            #usage()
-            #sys.exit(2)
-        newuser = pbuser()
-        newuser.first_name = "JAMES"
-        newuser.last_name = "CHARLTON"
-        newuser.last_name = "CHARLTON"
-        newuser.id = "c125ee99-f6a5-4ab0-a863-da162180d6cc"
-        payload = newuser.SerializeToString()
+        if payload is None:
+            print("Payload cannot be empty for a POST request")
+            usage()
+            sys.exit(2)
         response = client.post(path, payload)
         print((response.pretty_print()))
         client.stop()
