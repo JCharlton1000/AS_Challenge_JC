@@ -1,0 +1,21 @@
+--- serializer.py	2018-01-23 10:11:39.000000000 +0000
++++ serializer_patched.py	2020-06-03 15:13:38.693928000 +0100
+@@ -209,12 +209,14 @@
+             # if payload is present and of non-zero length, it is prefixed by
+             # an one-byte Payload Marker (0xFF) which indicates the end of
+             # options and the start of the payload
+-
+             fmt += "B"
+             values.append(defines.PAYLOAD_MARKER)
+-
+-            fmt += str(len(bytes(payload, "utf-8"))) + "s"
+-            values.append(bytes(payload, "utf-8"))
++            if type(payload) == str:
++                fmt += str(len(bytes(payload, "utf-8"))) + "s"
++                values.append(bytes(payload, "utf-8"))
++            else:
++                fmt += str(len(payload)) + "s"
++                values.append(payload)
+             # for b in str(payload):
+             #     fmt += "c"
+             #     values.append(bytes(b, "utf-8"))
