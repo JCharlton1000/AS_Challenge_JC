@@ -5,10 +5,20 @@ CoAP based Client and Server demo in python using protobuf messages
 
 
 ## Protobuf 
-in order to define new messages you must compile the protobuf complier and generate new *_pb2.py files
+
+For an explanation of protobuf please see:
+https://developers.google.com/protocol-buffers
+
+
+in order to define new messages you must compile the protobuf complier and generate new *_pb2.py files.
+
 This youtube video shows the instructions on acheiving this
 https://www.youtube.com/watch?v=EAFK-tN_yaw
 
+## CoAP
+
+I have chosen to use CoAP (Constrained application protocol) as it is VERY light and designed for resource constrained devices (you can run it on embedded devices). 
+CoAP meets the requirements for the challenge as it runs over UDP and uses a REST model. CoAP also feels VERY similar to HTTP.
 
 ## Installation
 Please use Python 3.6
