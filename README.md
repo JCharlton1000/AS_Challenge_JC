@@ -55,7 +55,7 @@ POST to /deleteuser/ where the payload contains a user protobuf message containi
 POST to /users/ where the payload contains a user protobuf message and id is included for the existing user to delete - the rest of the payload will be copied over to the existing user
 
 ### Add a new user
-POST to /users/ where the payload contaisn a user protobuf message, - omit the id field to ensure a new user is generated
+POST to /users/ where the payload contains a user protobuf message, - omit the id field to ensure a new user is generated and an existing is not modified
 
 ### Get all users
 GET to /users/  - server returns a protobuf message which can be converted to JSON easily. as shown in the demo
