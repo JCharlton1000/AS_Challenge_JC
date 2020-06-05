@@ -43,8 +43,11 @@ First run *coapserver.py*. If you pass no arguments to specify an IP and PORT th
 CoAP Server start on 127.0.0.1:5683  
 ['/', '/deleteuser', '/users']
 
-Run demo.py to see demonstation of adding, deleting and editing users on the server from the client.
+Run demo.py to see demonstation of adding, deleting and editing users on the server from the client.  
 coapclient_cli.py can be used to send specific requests through the command line to the server 
+example:  
+    $ python3 coapclient_cli.py -o GET -p 'coap://127.0.0.1:5683/users/'
+
 
 ## known issues
 
