@@ -48,6 +48,18 @@ coapclient_cli.py can be used to send specific requests through the command line
 example:  
     $ python3 coapclient_cli.py -o GET -p 'coap://127.0.0.1:5683/users/'
 
+###delete user
+POST to /deleteuser/ where the payload contains a user protobuf message containing the ID of the user to delete ( the other information is ignored for now) : NOTE THIS WILL CHANGE TO A NEW PROTOBUF MESSAGE
+
+###Edit a user
+POST to /users/ where the payload contains a user protobuf message and id is included for the existing user to delete - the rest of the payload will be copied over to the existing user
+
+###Add a new user
+POST to /users/ where the payload contaisn a user protobuf message, - omit the id field to ensure a new user is generated
+
+###Get all users
+GET to /users/  - server returns a protobuf message which can be converted to JSON easily. as shown in the demo
+
 
 ## known issues
 
