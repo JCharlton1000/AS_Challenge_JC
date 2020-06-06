@@ -69,6 +69,7 @@ class UserService:
 
     def __init__(self, coapclient):
         self._coap_client = coapclient
+        
     #returns all users from the server in JSON format
     def get_users(self):
         return MessageToJson(self._coap_client.get('/users/',None,pbusers))

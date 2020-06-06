@@ -36,7 +36,7 @@ all_users = user_service.get_users()
 print(all_users)
 
 #update the second user "steve" to a different email address and phone number
-user_service.update_user(user_id_to_modify, user_to_modify["firstName"], user_to_modify["lastName"], "supersteve@steve.com", "98765432100" )
+user_service.update_user(user_id_to_modify, None, None, "supersteve@steve.com", "98765432100" )
 
 
 #read back all the registeres users and print them out

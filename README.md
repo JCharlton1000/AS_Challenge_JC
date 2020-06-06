@@ -49,19 +49,18 @@ example:
     $ python3 coapclient_cli.py -o GET -p 'coap://127.0.0.1:5683/users/'
 
 ### delete user
-POST to /deleteuser/ where the payload contains a user protobuf message containing the ID of the user to delete ( the other information is ignored for now) : NOTE THIS WILL CHANGE TO A NEW PROTOBUF MESSAGE
+POST to /deleteuser/ where the payload contains a *UserDelete* protobuf message containg the ID of the user to delete
  
 ### Edit a user
-POST to /users/ where the payload contains a user protobuf message and id is included for the existing user to delete - the rest of the payload will be copied over to the existing user
+POST to /edituser/ where the payload contains a *UserUpdate* protobuf message containing the ID of the user to update along with any new fields
 
 ### Add a new user
-POST to /users/ where the payload contains a user protobuf message, - omit the id field to ensure a new user is generated and an existing is not modified
+POST to /users/ where the payload contains a *user* protobuf message
 
 ### Get all users
-GET to /users/  - server returns a protobuf message which can be converted to JSON easily. as shown in the demo
+GET to /users/  where the server returns a *users* protobuf message which is a list of all the users
 
 
 ## known issues
 
 1. The server responds with an INTERNAL_SERVER_ERROR response to any POST 
-2. The message type sent to deleteuser/ should bechanged to a different protobuf message that just contains the ID

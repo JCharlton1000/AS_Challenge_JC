@@ -57,10 +57,10 @@ class UserStorage():
 
         result, existing_user = self.get_user_by_id(userpb.id)
         if result:
-            if hasattr(userpb, "first_name"): existing_user.UserDetails.first_name = userpb.first_name
-            if hasattr(userpb, "last_name"): existing_user.UserDetails.last_name = userpb.last_name
-            if hasattr(userpb, "email"): existing_user.UserDetails.email = userpb.email
-            if hasattr(userpb, "phone_number"): existing_user.UserDetails.phone_number = userpb.phone_number
+            if userpb.first_name:   existing_user.UserDetails.first_name = userpb.first_name
+            if userpb.last_name:    existing_user.UserDetails.last_name = userpb.last_name
+            if userpb.email:        existing_user.UserDetails.email = userpb.email
+            if userpb.phone_number: existing_user.UserDetails.phone_number = userpb.phone_number
         return result
     
     # this is a slow approach - this should be reconsidered
