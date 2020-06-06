@@ -3,8 +3,7 @@
 import getopt
 import sys
 from coapthon.server.coap import CoAP
-from resources import Users, DeleteUser
-from protobuf.user_pb2 import Users as pbusers
+from UserResource import Users, DeleteUser, EditUser
 from ServerStorage import UserStorage
 
 class CoAPServer(CoAP):
@@ -13,6 +12,7 @@ class CoAPServer(CoAP):
         self._users = UserStorage(name="users")
         self.add_resource('users/', Users(self._users))
         self.add_resource('deleteuser/', DeleteUser(self._users))
+        self.add_resource('edituser/', EditUser(self._users))
 
         print(("CoAP Server start on " + host + ":" + str(port)))
         print((self.root.dump()))

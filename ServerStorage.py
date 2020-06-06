@@ -1,5 +1,8 @@
 from protobuf.user_pb2 import Users as pbusers
 from protobuf.user_pb2 import User as pbuser
+from protobuf.user_pb2 import UserDelete as pbdeleteuser
+from protobuf.user_pb2 import UserUpdate as pbdupdateuser
+from protobuf.user_pb2 import UserDetails as pbuserdetails
 import uuid
 
 #this class manages the storage of the users in memory - however this may NOT be thread safe and needs checking
@@ -16,38 +19,48 @@ class UserStorage():
     #if an ID is given but no match found then a new user is still created and a new ID given (TBD)
     def add_user(self,user):
         result = False
-        userpb = pbuser()
-        userpb.MergeFromString(bytes(user, 'utf-8'))
-        #have we been given an id - if so look for it
-        if hasattr(userpb, "id"):
-            result, existing_user = self.get_user_by_id(userpb.id)
-            if result:
-                #update an existing user using the given ID
-                existing_user.MergeFromString(bytes(user, 'utf-8'))
-            else:
-                new_user = self.users.people.add()
-                new_user.MergeFromString(bytes(user, 'utf-8'))
-                new_user.id = str(uuid.uuid4())
-                result= True
-        else: # no id given so its a new user
+        user_details = pbuserdetails()
+        user_details.MergeFromString(bytes(user, 'utf-8'))
+        id_provided = False
+
+        if not self.user_exists(user_details):
+            #have we been given an id - if so look for it
+            # if hasattr(userpb, "id"):
+            #     id_provided = True
+            #     exists, existing_user = self.get_user_by_id(user_details.id)
+            #     if exists:
+            #         # this user already exists
+            #         return False
             new_user = self.users.people.add()
-            new_user.MergeFromString(bytes(user, 'utf-8'))
-                #assign a new ID
-                #new_user.id = len(self.users.people) # TODO this is not good - it's just an index for now
-            new_user.id = str(uuid.uuid4())
+            new_user.UserDetails.MergeFromString(bytes(user, 'utf-8'))
+            # sanitze input
+            new_user.UserDetails.first_name = new_user.UserDetails.first_name.capitalize()
+            new_user.UserDetails.last_name = new_user.UserDetails.last_name.capitalize()
+            #assign a new ID if one wasnt given
+            if not id_provided : new_user.id = str(uuid.uuid4())
             result= True
         return result
     
     #
-    def remove_user(self, user):
+    def remove_user(self, remove):
         result = False
-        userpb = pbuser()
+        user_to_delete = pbdeleteuser()
+        user_to_delete.MergeFromString(bytes(remove, 'utf-8'))
+        result, user = self.get_user_by_id(user_to_delete.id)
+        if result : result = self.remove_user_by_id(user.id)
+        return result
+    
+    def edit_user(self, user):
+        result = False
+        userpb = pbdupdateuser()
         userpb.MergeFromString(bytes(user, 'utf-8'))
-        """ for index, person in enumerate(self.users.people):
-            person = person
-            result = True """
-        result, user = self.get_user_by_id(userpb.id)
-        result = self.remove_user_by_id(userpb.id)
+
+        result, existing_user = self.get_user_by_id(userpb.id)
+        if result:
+            if hasattr(userpb, "first_name"): existing_user.UserDetails.first_name = userpb.first_name
+            if hasattr(userpb, "last_name"): existing_user.UserDetails.last_name = userpb.last_name
+            if hasattr(userpb, "email"): existing_user.UserDetails.email = userpb.email
+            if hasattr(userpb, "phone_number"): existing_user.UserDetails.phone_number = userpb.phone_number
         return result
     
     # this is a slow approach - this should be reconsidered
@@ -77,12 +90,20 @@ class UserStorage():
                 result = True
                 break
         return result
-
-    # the left user fields is compared to the right - so if the right contains more fields these are ignored
-    # this needs reworking for a btter comparison - a comparison could be made by serializing both but this is not
-    # a good approach as protobufs can contain extra fields
-    def is_same(self, user_l, user_r):
+    
+    def user_exists(self, user):
         result = False
-        for descriptor in user_l.descriptor.fields:
-            test+1
+        for existing_user in self.users.people:
+            if existing_user.UserDetails.email == user.email:
+                result = True
+                break
+        return result
+
+    #TODO
+    def search_users(self, user):
+        result = False
+        for person in self.users.people:
+            if person.id == id:
+                result = True
+                break
         return result

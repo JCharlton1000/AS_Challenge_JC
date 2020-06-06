@@ -25,14 +25,13 @@ def client_callback(response):
     print("Callback")
 
 def handle_get_response(response):
-    if response.payload:
+    pass
+    """ if response.payload:
         users = pbusers()
         users.ParseFromString(bytes(response.payload, 'utf-8'))
-        #users.ParseFromString(response.payload)
         print(MessageToJson(users))
-        #.ParseFromString(response.payload)
     else:
-        print("The payload returned was empty")
+        print("The payload returned was empty") """
 
 
 
